@@ -1,0 +1,169 @@
+<!DOCTYPE >
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>LAB Pro </title>
+  <!-- Load Google Fonts -->
+
+  <script src="js/app.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.min.js" defer></script>
+  <script src="js/tictactoe.js" defer></script>
+  <script src="js/minimax.js" defer></script>
+  <script src="js/donut.js" defer></script>
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900|Merriweather&display=swap" rel="stylesheet">  <!-- Load Styles -->
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/donut.css" rel="stylesheet">
+</head>
+<body>
+  <!-- HTML Follows BEM naming conventions 
+  IDs are only used for sections to connect menu achors to sections -->
+  <header class="page__header">
+    <nav class="navbar__menu">
+      <!-- Navigation starts as empty UL that will be populated with JS -->
+      <ul id="navbar__list"></ul>
+    </nav>
+  </header>
+  <main>
+    <header class="main__hero">
+      <h1>Landing Page </h1>
+    </header>
+    <!-- Each Section has an ID (used for the anchor) and 
+    a data attribute that will populate the li node.
+    Adding more sections will automatically populate nav.
+    The first section is set to active class by default -->
+    <section id="section1" data-nav="Donut Theory" class="your-active-class">
+      <div class="landing__container">
+        <h2>Donut Math: The Theory Behind the Spinning ASCII Donut</h2>
+        <p>
+          The rotating ASCII donut is a mesmerizing demonstration of how mathematics and programming come together to create art. This visualization relies on 3D geometry, projections, and light shading to render a spinning torus (donut shape) using only ASCII characters. It’s a perfect example of blending scientific principles with creative simplicity.
+        </p>
+        <h3>Understanding the Donut</h3>
+        <p>
+          A torus is a 3D shape defined by two radii: 
+          <strong>R1</strong>, the radius of the circle that forms the cross-section of the torus, 
+          and <strong>R2</strong>, the distance from the center of the torus to the center of the cross-section.
+        </p>
+        <p>
+          The torus is described mathematically using parametric equations:
+          <br><strong>x = (R2 + R1 * cos(θ)) * cos(φ)</strong><br>
+          <strong>y = (R2 + R1 * cos(θ)) * sin(φ)</strong><br>
+          <strong>z = R1 * sin(θ)</strong>
+          <br>Where <strong>θ</strong> controls the rotation of the small circle, and <strong>φ</strong> rotates it around the central axis.
+        </p>
+        <h3>How It Works</h3>
+        <p>
+          To display the torus on a 2D screen, each 3D point is projected onto the plane using perspective projection:
+          <br><strong>x' = K1 * x / (K2 + z)</strong><br>
+          <strong>y' = K1 * y / (K2 + z)</strong>
+          <br>Here, <strong>K1</strong> and <strong>K2</strong> are constants controlling scale and depth. This transformation ensures the 3D torus appears correctly on a 2D screen.
+        </p>
+        <h3>Lighting and Shading</h3>
+        <p>
+          To simulate lighting, we calculate the surface's brightness using the dot product of its normal vector and a light direction. The brightness is mapped to ASCII characters like <code>.,-~:;=!*#$@</code>, with brighter characters representing more light.
+        </p>
+        <h3>Animating the Donut</h3>
+        <p>
+          The spinning effect is achieved by continuously rotating the torus using angles <strong>A</strong> and <strong>B</strong>. By incrementing these angles and reprojecting the torus, we create the illusion of smooth motion.
+        </p>
+        <h3>Conclusion</h3>
+        <p>
+          The ASCII donut showcases the power of mathematics and creativity. It demonstrates the elegance of geometric transformations, the efficiency of projection techniques, and the artistic use of ASCII characters. Whether viewed as a mathematical marvel or computational art, the donut continues to inspire and delight.
+        </p>
+      </div>
+    </section>
+    <section id="section2" data-nav="Donut ASCII Lab">
+      <div class="landing__container">
+        <h2>Lab 1</h2>
+        
+        <div class= "donut-shape">
+          <pre id="donut"></pre>
+   
+       </div>
+      </div>
+    </section>
+
+   
+
+    <section id="section3" data-nav="Minimax() Theory">
+      <div class="landing__container">
+        <h2>Minimax Algorithm: The Theory Behind Optimal Decision-Making</h2>
+        <p>
+          The Minimax algorithm is a decision-making framework used in games like Tic-Tac-Toe, Chess, and Checkers. It ensures that the player makes the best possible move by considering all potential moves and their outcomes, assuming the opponent also plays optimally.
+        </p>
+        <h3>How the Minimax Algorithm Works</h3>
+        <ol>
+          <li>
+            <strong>Game Tree Representation:</strong>
+            <ul>
+              <li>The game is represented as a tree of possible moves, where:</li>
+              <li>Each node represents a game state.</li>
+              <li>The edges represent moves leading to a new state.</li>
+              <li>The root node is the current state, and the leaves represent the possible end states of the game.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Players as Opponents:</strong>
+            <ul>
+              <li><strong>Maximizer:</strong> The algorithm assumes the current player tries to maximize their score.</li>
+              <li><strong>Minimizer:</strong> The opponent aims to minimize the current player's score.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Score Evaluation:</strong>
+            <ul>
+              <li>At the end of the game, each state is given a score based on the game's outcome:</li>
+              <li><strong>Win:</strong> A high positive value (e.g., +10 for the maximizer, -10 for the minimizer).</li>
+              <li><strong>Loss:</strong> A high negative value.</li>
+              <li><strong>Draw:</strong> A neutral score, usually 0.</li>
+            </ul>
+          </li>
+        </ol>
+        <h3>Algorithm Steps</h3>
+        <ol>
+          <li>
+            <strong>Recursive Exploration:</strong>
+            <p>The algorithm explores all possible moves recursively. At each step:</p>
+            <ul>
+              <li>If it's the maximizer's turn, it selects the move with the highest score.</li>
+              <li>If it's the minimizer's turn, it selects the move with the lowest score.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Backpropagation:</strong>
+            <p>After reaching terminal nodes, scores are propagated back up the tree to determine the best move at the root.</p>
+          </li>
+        </ol>
+        <h3>Applications</h3>
+        <p>
+          Minimax is widely used in AI for turn-based games. Its combination with techniques like alpha-beta pruning enhances efficiency by eliminating redundant calculations, making it suitable for complex games with large decision trees.
+        </p>
+      </div>
+    </section>
+
+    <section id="section4" data-nav="Tic Tac Toe Lab">
+      <div class="landing__container">
+        <!-- <div class="galaxy">
+          <div class="stars"></div>
+      </div> -->
+        <h2>Lab 2</h2>
+        <p>Play Tic Tac Toe!</p>
+        <div id="tictactoe-container"></div>
+        <div id="game-controls">
+          <div id="scoreboard">
+            <p>Player Score: <span id="human-score">0</span></p>
+            <p>AI Score: <span id="ai-score">0</span></p>
+          </div>
+          <button id="start-game">Start Game</button>
+          <button id="reset-scores">Reset Scores</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="page__footer">
+    <p>&copy Udacity</p>
+  </footer>
+
+</body>
+</html>
