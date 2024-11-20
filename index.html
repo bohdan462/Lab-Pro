@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>LAB Pro </title>
   <!-- Load Google Fonts -->
 
   <script src="js/app.js" defer></script>
+  <script src="js/binaryGalaxy.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.min.js" defer></script>
   <script src="js/tictactoe.js" defer></script>
   <script src="js/minimax.js" defer></script>
@@ -15,72 +17,128 @@
   <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900|Merriweather&display=swap" rel="stylesheet">  <!-- Load Styles -->
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/donut.css" rel="stylesheet">
+  <link href="css/binary.css" rel="stylesheet">
 </head>
 <body>
   <!-- HTML Follows BEM naming conventions 
+   
   IDs are only used for sections to connect menu achors to sections -->
+
+  <div class="galaxy-header">
+    <div class="galaxy">
+      <div class="stars"></div>
+    </div>
+  </div>
   <header class="page__header">
     <nav class="navbar__menu">
-      <!-- Navigation starts as empty UL that will be populated with JS -->
+      <button class="toggle-menu" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <ul id="navbar__list"></ul>
     </nav>
   </header>
   <main>
     <header class="main__hero">
-      <h1>Landing Page </h1>
-    </header>
-    <!-- Each Section has an ID (used for the anchor) and 
-    a data attribute that will populate the li node.
-    Adding more sections will automatically populate nav.
-    The first section is set to active class by default -->
+      <div class="landing__container">
+        <h3>LAB Pro: Turning Theory Into Practice </h3>
+        <p>“Learn, Apply, Build”</p>
+    </div>
+  </header>
+  
     <section id="section1" data-nav="Donut Theory" class="your-active-class">
       <div class="landing__container">
-        <h2>Donut Math: The Theory Behind the Spinning ASCII Donut</h2>
+        <h2>Donut Math: The Art of Spinning ASCII</h2>
+        
         <p>
-          The rotating ASCII donut is a mesmerizing demonstration of how mathematics and programming come together to create art. This visualization relies on 3D geometry, projections, and light shading to render a spinning torus (donut shape) using only ASCII characters. It’s a perfect example of blending scientific principles with creative simplicity.
+          Ever wondered how a simple ASCII donut can spin so mesmerizingly on your screen? It's all about the math and a bit of programming magic. Let's dive into the fascinating world of torus geometry and projection to unravel this mystery.
         </p>
-        <h3>Understanding the Donut</h3>
+
+        <h3>Mathematical Foundations</h3>
+        
+        <h4>1. Torus Geometry</h4>
         <p>
-          A torus is a 3D shape defined by two radii: 
-          <strong>R1</strong>, the radius of the circle that forms the cross-section of the torus, 
-          and <strong>R2</strong>, the distance from the center of the torus to the center of the cross-section.
+          Picture a donut. Not the kind you eat, but a torus—a 3D shape defined by two radii:
+          <ul>
+            <li><strong>R<sub>1</sub></strong>: The radius of the tube</li>
+            <li><strong>R<sub>2</sub></strong>: The distance from the center of the tube to the center of the torus</li>
+          </ul>
+          The magic begins with these parametric equations:
         </p>
+        <div class="formula">
+          <code>x = (R<sub>2</sub> + R<sub>1</sub>cosθ)cosφ</code><br>
+          <code>y = (R<sub>2</sub> + R<sub>1</sub>cosθ)sinφ</code><br>
+          <code>z = R<sub>1</sub>sinθ</code>
+        </div>
+
+        <h4>2. 3D to 2D Projection</h4>
         <p>
-          The torus is described mathematically using parametric equations:
-          <br><strong>x = (R2 + R1 * cos(θ)) * cos(φ)</strong><br>
-          <strong>y = (R2 + R1 * cos(θ)) * sin(φ)</strong><br>
-          <strong>z = R1 * sin(θ)</strong>
-          <br>Where <strong>θ</strong> controls the rotation of the small circle, and <strong>φ</strong> rotates it around the central axis.
+          To bring our 3D torus to life on a 2D screen, we project each point using:
         </p>
-        <h3>How It Works</h3>
+        <div class="formula">
+          <code>x' = K<sub>1</sub> * x / (K<sub>2</sub> + z)</code><br>
+          <code>y' = K<sub>1</sub> * y / (K<sub>2</sub> + z)</code>
+        </div>
         <p>
-          To display the torus on a 2D screen, each 3D point is projected onto the plane using perspective projection:
-          <br><strong>x' = K1 * x / (K2 + z)</strong><br>
-          <strong>y' = K1 * y / (K2 + z)</strong>
-          <br>Here, <strong>K1</strong> and <strong>K2</strong> are constants controlling scale and depth. This transformation ensures the 3D torus appears correctly on a 2D screen.
+          Here, <strong>K<sub>1</sub></strong> and <strong>K<sub>2</sub></strong> are our trusty constants, tweaking the scale and depth to perfection.
         </p>
-        <h3>Lighting and Shading</h3>
+
+        <h4>3. Lighting and Shading</h4>
         <p>
-          To simulate lighting, we calculate the surface's brightness using the dot product of its normal vector and a light direction. The brightness is mapped to ASCII characters like <code>.,-~:;=!*#$@</code>, with brighter characters representing more light.
+          The secret sauce? Lighting. We calculate brightness using the dot product of the surface normal and a light direction vector:
         </p>
-        <h3>Animating the Donut</h3>
+        <div class="formula">
+          <code>L = cosφcosθsinB - cosAcosθsinφ - sinAsinθ + cosB(cosAsinθ - cosθsinAsinφ)</code>
+        </div>
         <p>
-          The spinning effect is achieved by continuously rotating the torus using angles <strong>A</strong> and <strong>B</strong>. By incrementing these angles and reprojecting the torus, we create the illusion of smooth motion.
+          This luminance value <strong>L</strong> is then mapped to ASCII characters: <code>.,-~:;=!*#$@</code>, creating the illusion of depth and texture.
         </p>
+
+        <h3>JavaScript Implementation</h3>
+        
+        <h4>1. Core Variables</h4>
+        <div class="code-block">
+          <code>var A = 1, B = 1; // Rotation angles</code><br>
+          <code>var R1 = 1, R2 = 2; // Torus radii</code><br>
+          <code>var K1 = 150, K2 = 5; // Projection constants</code>
+        </div>
+
+        <h4>2. Animation Loop</h4>
+        <p>
+          The donut spins with a simple trick: incrementing the rotation angles:
+        </p>
+        <div class="code-block">
+          <code>A += 0.07; // Increment angle A</code><br>
+          <code>B += 0.03; // Increment angle B</code>
+        </div>
+
+        <h4>3. Frame Rendering</h4>
+        <p>
+          Each frame is a masterpiece, calculated and projected, pixel by pixel:
+        </p>
+        <div class="code-block">
+          <code>function renderAsciiFrame() {</code><br>
+          <code>  // Calculate positions and luminance</code><br>
+          <code>  // Update ASCII buffer</code><br>
+          <code>}</code>
+        </div>
+
         <h3>Conclusion</h3>
         <p>
-          The ASCII donut showcases the power of mathematics and creativity. It demonstrates the elegance of geometric transformations, the efficiency of projection techniques, and the artistic use of ASCII characters. Whether viewed as a mathematical marvel or computational art, the donut continues to inspire and delight.
+          The spinning ASCII donut is more than just a visual treat; it's a testament to the beauty of mathematics and programming. With a few equations and some clever coding, we create a dynamic piece of art that captivates and inspires.
         </p>
       </div>
     </section>
+    
     <section id="section2" data-nav="Donut ASCII Lab">
       <div class="landing__container">
-        <h2>Lab 1</h2>
-        
-        <div class= "donut-shape">
-          <pre id="donut"></pre>
-   
-       </div>
+        <h3> Donut ASCII Lab</h3>
+        <div class="lab-container">
+          <div class="donut-shape">
+            <pre id="donut"></pre>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -88,67 +146,87 @@
 
     <section id="section3" data-nav="Minimax() Theory">
       <div class="landing__container">
-        <h2>Minimax Algorithm: The Theory Behind Optimal Decision-Making</h2>
+        <h2>Tic Tac Toe: Mastering Strategy with Minimax</h2>
         <p>
-          The Minimax algorithm is a decision-making framework used in games like Tic-Tac-Toe, Chess, and Checkers. It ensures that the player makes the best possible move by considering all potential moves and their outcomes, assuming the opponent also plays optimally.
+          Tic Tac Toe might seem simple, but with the Minimax algorithm, it becomes a battleground of strategy and foresight. Let's explore how this algorithm turns a humble game into a test of wits.
         </p>
-        <h3>How the Minimax Algorithm Works</h3>
-        <ol>
-          <li>
-            <strong>Game Tree Representation:</strong>
-            <ul>
-              <li>The game is represented as a tree of possible moves, where:</li>
-              <li>Each node represents a game state.</li>
-              <li>The edges represent moves leading to a new state.</li>
-              <li>The root node is the current state, and the leaves represent the possible end states of the game.</li>
-            </ul>
-          </li>
-          <li>
-            <strong>Players as Opponents:</strong>
-            <ul>
-              <li><strong>Maximizer:</strong> The algorithm assumes the current player tries to maximize their score.</li>
-              <li><strong>Minimizer:</strong> The opponent aims to minimize the current player's score.</li>
-            </ul>
-          </li>
-          <li>
-            <strong>Score Evaluation:</strong>
-            <ul>
-              <li>At the end of the game, each state is given a score based on the game's outcome:</li>
-              <li><strong>Win:</strong> A high positive value (e.g., +10 for the maximizer, -10 for the minimizer).</li>
-              <li><strong>Loss:</strong> A high negative value.</li>
-              <li><strong>Draw:</strong> A neutral score, usually 0.</li>
-            </ul>
-          </li>
-        </ol>
-        <h3>Algorithm Steps</h3>
-        <ol>
-          <li>
-            <strong>Recursive Exploration:</strong>
-            <p>The algorithm explores all possible moves recursively. At each step:</p>
-            <ul>
-              <li>If it's the maximizer's turn, it selects the move with the highest score.</li>
-              <li>If it's the minimizer's turn, it selects the move with the lowest score.</li>
-            </ul>
-          </li>
-          <li>
-            <strong>Backpropagation:</strong>
-            <p>After reaching terminal nodes, scores are propagated back up the tree to determine the best move at the root.</p>
-          </li>
-        </ol>
-        <h3>Applications</h3>
+    
+        <h3>Game Setup</h3>
         <p>
-          Minimax is widely used in AI for turn-based games. Its combination with techniques like alpha-beta pruning enhances efficiency by eliminating redundant calculations, making it suitable for complex games with large decision trees.
+          Our battlefield is a 3x3 grid, elegantly represented in JavaScript as:
+        </p>
+        <div class="code-block">
+          <code>const board = [</code><br>
+          <code>  ['', '', ''],</code><br>
+          <code>  ['', '', ''],</code><br>
+          <code>  ['', '', '']</code><br>
+          <code>];</code>
+        </div>
+        <p>
+          Players alternate turns, placing their marks (X or O) in empty cells. The human player usually starts, but the AI is always ready to challenge.
+        </p>
+    
+        <h3>Minimax Algorithm</h3>
+        <p>
+          The Minimax algorithm is the AI's secret weapon, evaluating every possible move to ensure it plays flawlessly.
+        </p>
+    
+        <h4>1. Evaluating Moves</h4>
+        <p>
+          The AI simulates the game to its conclusion, scoring each outcome:
+        </p>
+        <div class="code-block">
+          <code>let scores = {</code><br>
+          <code>  AI: 10,</code><br>
+          <code>  Player: -10,</code><br>
+          <code>  tie: 0</code><br>
+          <code>};</code>
+        </div>
+        <p>
+          A win for the AI is a triumph (+10), a win for the human is a setback (-10), and a tie is a stalemate (0).
+        </p>
+    
+        <h4>2. Recursive Exploration</h4>
+        <p>
+          The algorithm delves into every possible move, using a depth-first search to explore the game tree:
+        </p>
+        <div class="code-block">
+          <code>function minimax(board, depth, isMaximizing) {</code><br>
+          <code>  // Base case: check for a winner</code><br>
+          <code>  let result = checkWinner();</code><br>
+          <code>  if (result !== null) {</code><br>
+          <code>    return scores[result];</code><br>
+          <code>  }</code><br>
+          <code>  // Recursive case: explore moves</code><br>
+          <code>}</code>
+        </div>
+        <p>
+          The AI alternates between maximizing and minimizing scores, depending on whose turn it is.
+        </p>
+    
+        <h4>3. Making the Best Move</h4>
+        <p>
+          The AI selects the move with the highest score, ensuring it plays optimally:
+        </p>
+        <div class="code-block">
+          <code>function bestMove() {</code><br>
+          <code>  let bestScore = -Infinity;</code><br>
+          <code>  let move;</code><br>
+          <code>  // Evaluate each move</code><br>
+          <code>}</code>
+        </div>
+    
+        <h3>Conclusion</h3>
+        <p>
+          With the Minimax algorithm, our Tic Tac Toe AI is unbeatable, turning a simple game into a strategic challenge. It evaluates every possibility, ensuring that every move is the best move, and every game is a test of skill.
         </p>
       </div>
     </section>
 
     <section id="section4" data-nav="Tic Tac Toe Lab">
       <div class="landing__container">
-        <!-- <div class="galaxy">
-          <div class="stars"></div>
-      </div> -->
-        <h2>Lab 2</h2>
-        <p>Play Tic Tac Toe!</p>
+        <h3>Play Tic Tac Toe!</h3>
+        <p>Try to Beat Unbeatable AI</p>
         <div id="tictactoe-container"></div>
         <div id="game-controls">
           <div id="scoreboard">
@@ -160,6 +238,10 @@
         </div>
       </div>
     </section>
+
+
+   
+
   </main>
   <footer class="page__footer">
     <p>&copy Udacity</p>

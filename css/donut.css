@@ -1,13 +1,46 @@
-
-.donut-shape {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-
-  pre{
-    font-family: monospace;
-    font-size: 10px;
+Lab container wrapper
+.lab-container {
+  width: 100%;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2em 0;
+  overflow: hidden; /* Prevent pre overflow */
 }
+
+/* Donut shape container */
+.donut-shape {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1.75; /* Maintain ASCII art proportions */
+  position: relative;
+  margin: 0 auto;
+}
+
+
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+  .donut-shape {
+      max-width: 300px;
+  }
   
+  pre {
+      font-size: 8px;
+      transform: translate(-50%, -50%) scale(0.8);
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .donut-shape {
+      max-width: 240px;
+  }
+  
+  pre {
+      font-size: 6px;
+      transform: translate(-50%, -50%) scale(0.7);
+  }
+}

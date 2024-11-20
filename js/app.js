@@ -25,8 +25,6 @@ function buildNavbar() {
     });
 
     navbarList.appendChild(fragment);
-
-    console.log('Navbar built:', navbarList); // Debugging
 }
 
 /**
@@ -34,60 +32,82 @@ function buildNavbar() {
  */
 // Observe sections and determine the current visible section
 function observeSections() {
-    const sections = document.querySelectorAll('section');
     const observerOptions = {
-        root: null, // Use the viewport as the root
+        root: null,
         rootMargin: '0px',
-        threshold: 0.5, // Trigger when 50% of the section is visible
+        threshold: 0.5,
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                // Remove active class from all sections and links
-                document.querySelectorAll('section').forEach((section) => {
-                    section.classList.remove('your-active-class');
-                });
-                document.querySelectorAll('.menu__link').forEach((link) => {
-                    link.classList.remove('active');
-                });
+                // Remove active classes
+                document.querySelectorAll('section').forEach(section => 
+                    section.classList.remove('your-active-class'));
+                document.querySelectorAll('.menu__link').forEach(link => 
+                    link.classList.remove('active'));
 
-                // Add active class to the currently visible section
+                // Add active classes
                 entry.target.classList.add('your-active-class');
-
-                // Highlight the corresponding navbar link
                 const activeLink = document.querySelector(
                     `.menu__link[href="#${entry.target.id}"]`
                 );
-                if (activeLink) {
-                    activeLink.classList.add('active');
-                }
+                if (activeLink) activeLink.classList.add('active');
             }
         });
     }, observerOptions);
 
-    sections.forEach((section) => {
-        observer.observe(section);
-    });
+    sections.forEach(section => observer.observe(section));
 }
 
 /**
  * Smooth scrolling to sections
  */
-navbarList.addEventListener('click', (event) => {
+function scrollToSection(event) {
     if (event.target.classList.contains('menu__link')) {
         event.preventDefault();
-
-        const sectionID = event.target.getAttribute('href').slice(1);
-        const section = document.getElementById(sectionID);
-
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            console.error(`Section not found: ${sectionID}`); // Debugging
+        const targetId = event.target.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+            window.scrollTo({
+                behavior: 'smooth',
+                top: targetSection.offsetTop - 60
+            });
         }
     }
+}
+
+/**
+ * Mobile menu handling
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.toggle-menu');
+    const navbar = document.querySelector('.navbar__menu');
+
+    function closeMenu() {
+        navbar.classList.remove('active');
+        toggle.classList.remove('active');
+    }
+
+    // Toggle menu
+    toggle.addEventListener('click', () => {
+        navbar.classList.toggle('active');
+        toggle.classList.toggle('active');
+    });
+
+    // Close menu on any click outside or on menu links
+    document.addEventListener('click', (event) => {
+        if ((!navbar.contains(event.target) && !toggle.contains(event.target)) || 
+            event.target.classList.contains('menu__link')) {
+            closeMenu();
+        }
+    });
 });
+
+
+// Event Listeners
+navbarList.addEventListener('click', scrollToSection);
 
 /**
  * Initialize the page
