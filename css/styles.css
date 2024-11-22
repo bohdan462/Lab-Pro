@@ -11,7 +11,7 @@
 
 /* ---- Base Rules ---- */
 html {
-scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -19,6 +19,7 @@ body {
     color: #e5e5e5;
     font-family: 'Fira Code', monospace;
     margin: 0;
+    padding: 0;
   }
 
 /* ---- Canvas Rules ---- */
@@ -35,20 +36,15 @@ body {
     opacity: 0.1;
 }
 
-
-
 .p5Canvas {
     display: block;
     margin: 0 auto;
-    width: 400px; /* Ensure this matches the intended size */
-    height: 400px; /* Ensure this matches the intended size */
 }
 
 pre {
     font-family: monospace;
     font-size: 10px;
     line-height: 1;
-
     white-space: pre;
     position: absolute;
     top: 50%;
@@ -78,25 +74,16 @@ pre {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px; /* Add spacing between scoreboard and buttons */
-    margin-top: 20px; /* Add spacing between canvas and controls */
+    gap: 10px; 
+    margin-top: 20px; 
 }
 
 /* Scoreboard: Horizontal alignment of scores */
 #scoreboard {
     display: flex;
-    justify-content: space-between; /* Equal space between Player and AI scores */
-    width: 300px; /* Matches canvas width */
+    justify-content: space-between; 
+    width: 300px; 
     margin-bottom: 10px;
-}
-
-/* Buttons styling */
-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 #start-game {
@@ -117,6 +104,14 @@ button {
     background-color: #c82333; /* Darker red on hover */
 }
 
+/* Button styling */
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 /* Section Padding */
 section {
@@ -256,7 +251,7 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 1em;
-    position: relative; /* Keep position relative */
+    position: relative;
 }
 
 @media only screen and (min-width: 35em){
