@@ -26,19 +26,13 @@ body {
 /* Update canvas container */
 #tictactoe-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 20px auto;
     width: 400px;
-    height: 400px; 
-    position: relative;
     background: #fff;
     opacity: 0.1;
-}
-
-.p5Canvas {
-    display: block;
-    margin: 0 auto;
 }
 
 pre {
@@ -348,12 +342,6 @@ main {
 
   }
 
-section:nth-of-type(even) .landing__container {
-    margin-right: 0;
-    margin-left: auto;
-    text-align: right; 
-}
-
 /* Background Circles */
 /* Note that background circles are created with psuedo elements before and after */
 /* Circles appear to be random do to use of :nth-of-type psuedo class */
@@ -361,6 +349,7 @@ section:nth-of-type(odd) .landing__container::before {
     content: '';
     background: rgba(255, 255, 255, 0.187);
     position: absolute;
+    
     z-index: -5;
     width: 20vh;
     height: 20vh;
@@ -374,8 +363,8 @@ section:nth-of-type(even) .landing__container::before {
     background: rgb(255,255,255);
     background: linear-gradient(0deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.2) 100%);
     position: absolute;
-    top: 3em;
-    right: 3em;
+    /* top: 3em;
+    right: 3em; */
     z-index: -5;
     width: 10vh;
     height: 10vh;

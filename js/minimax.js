@@ -23,6 +23,12 @@ function bestMove() {
   
     board[move.i][move.j] = ai;
     currentPlayer = human;
+    updateDisplay();
+
+    const result = checkWinner();
+    if (result !== null) {
+      handleGameEnd(result);
+    }
   }
   
   let scores = {
@@ -46,7 +52,7 @@ function bestMove() {
             board[i][j] = ai;
             let score = minimax(board, depth + 1, false);
             board[i][j] = '';
-            bestScore = max(score, bestScore);
+            bestScore = Math.max(score, bestScore);
           }
         }
       }
@@ -60,7 +66,7 @@ function bestMove() {
             board[i][j] = human;
             let score = minimax(board, depth + 1, true);
             board[i][j] = '';
-            bestScore = min(score, bestScore);
+            bestScore = Math.min(score, bestScore);
           }
         }
       }
