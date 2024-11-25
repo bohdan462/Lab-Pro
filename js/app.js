@@ -133,6 +133,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const floatingIcon = document.querySelector('.floating-nav-icon');
+    const navbar = document.querySelector('.navbar__menu');
+    
+    floatingIcon.addEventListener('click', function() {
+        navbar.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!floatingIcon.contains(event.target) && !navbar.contains(event.target)) {
+            navbar.classList.remove('active');
+        }
+    });
+
+    // Close menu when a link is clicked
+    const navLinks = document.querySelectorAll('.menu__link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navbar.classList.remove('active');
+        });
+    });
+});
+
 
 // Event Listeners
 navbarList.addEventListener('click', scrollToSection);

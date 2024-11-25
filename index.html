@@ -28,13 +28,17 @@
   </div>
   <header class="page__header">
     <nav class="navbar__menu">
-      <button class="toggle-menu" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul id="navbar__list"></ul>
+      <div class="floating-nav-icon">
+        <svg viewBox="0 0 24 24">
+            <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
+        </svg>
+    </div>
+    <ul id="navbar__list"></ul>
+      
+     
+      
     </nav>
+    
   </header>
   <main>
     <header class="main__hero">
@@ -264,7 +268,16 @@
 
   </main>
   <footer class="page__footer">
-    <p>LAB Pro Co.</p>
+    <div class="footer__content">
+        <p>LAB Pro Co.</p>
+        <div class="random-fact">
+            <span id="fact-label">Did you know? </span>
+            <span id="fact-content">π²/g ≈ 1 year in seconds</span>
+        </div>
+        <div class="footer__code">
+            <code>while(alive) { code.improve(); }</code>
+        </div>
+    </div>
   </footer>
 
 </body>

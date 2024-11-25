@@ -14,8 +14,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* max-height: 160px;
-  max-width: 280px; */
   aspect-ratio: 1.75;
   position: relative;
 
@@ -37,10 +35,10 @@ pre {
 /* Responsive adjustments */
 @media only screen and (max-width: 768px) {
   .lab-container {
-    height: 30em;
+    height: 50em;
   }
   .donut-shape {
-      max-width: 300px;
+      max-width: 320px;
   }
   
   pre {

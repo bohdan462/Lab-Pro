@@ -13,93 +13,93 @@
     position: absolute;
     opacity: 0.15;
     font-size: 24px;
-    color: #ff0;
+    font-family: 'Fira Code', monospace;
+    color: var(--color-primary);
     filter: blur(1px);
     transition: opacity 0.3s ease;
 }
 
-section:nth-of-type(1) ~ .floating-shapes .floating-shape:not(.shape1):not(.shape2):not(.shape3):not(.shape4) {
-    opacity: 0;
+/* Show only relevant shapes per section */
+section:nth-of-type(4) ~ .floating-shapes .floating-shape {
+    opacity: 0.2;
+    color: var(--color-primary);
 }
 
-section:nth-of-type(2) ~ .floating-shapes .floating-shape:not(.shape5):not(.shape6):not(.shape7):not(.shape8) {
-    opacity: 0;
+/* Enhanced glow effect */
+@keyframes glow {
+    0% { 
+        text-shadow: 0 0 20px var(--color-primary);
+        opacity: 0.2;
+        color: var(--color-primary);
+    }
+    50% {
+        text-shadow: 0 0 40px var(--color-secondary);
+        opacity: 0.25;
+        color: var(--color-secondary);
+    }
+    100% { 
+        text-shadow: 0 0 60px var(--color-accent-1);
+        opacity: 0.3;
+        color: var(--color-accent-1);
+    }
 }
 
-section:nth-of-type(3) ~ .floating-shapes .floating-shape:not(.shape9):not(.shape10):not(.shape11):not(.shape12) {
-    opacity: 0;
+/* Tic Tac Toe specific shapes */
+.shape1, .shape3, .shape5, .shape7, .shape9, .shape11, .shape13, .shape15 {
+    font-weight: bold;
+    color: var(--color-accent-2);
 }
 
-section:nth-of-type(4) ~ .floating-shapes .floating-shape:not(.shape13):not(.shape14):not(.shape15):not(.shape16) {
-    opacity: 0;
+.shape2, .shape4, .shape6, .shape8, .shape10, .shape12, .shape14, .shape16 {
+    font-weight: bold;
+    color: var(--color-accent-1);
 }
 
-/* Smoother animations */
+/* Updated positions and animations for better game framing */
+.shape1 { top: 5%; left: 5%; font-size: 48px; animation: float 20s infinite, glow 3s infinite; }
+.shape2 { top: 15%; right: 10%; font-size: 36px; animation: float-reverse 25s infinite, glow 4s infinite; }
+.shape3 { bottom: 15%; left: 15%; font-size: 42px; animation: float-diagonal 22s infinite, glow 3.5s infinite; }
+.shape4 { top: 40%; right: 5%; font-size: 40px; animation: float 28s infinite, glow 4.5s infinite; }
+.shape5 { bottom: 10%; right: 20%; font-size: 44px; animation: float-reverse 24s infinite, glow 3.8s infinite; }
+.shape6 { top: 60%; left: 10%; font-size: 38px; animation: float-diagonal 26s infinite, glow 4.2s infinite; }
+.shape7 { top: 80%; right: 15%; font-size: 50px; animation: float 23s infinite, glow 3.3s infinite; }
+.shape8 { bottom: 30%; left: 25%; font-size: 46px; animation: float-reverse 27s infinite, glow 4.7s infinite; }
+
+/* Enhanced floating animations */
 @keyframes float {
     0%, 100% { 
         transform: translate(0, 0) rotate(0deg) scale(1); 
-        opacity: 0.15;
+        filter: blur(1px);
     }
     50% { 
-        transform: translate(-15px, 15px) rotate(5deg) scale(1.1); 
-        opacity: 0.2;
+        transform: translate(-20px, 20px) rotate(5deg) scale(1.1); 
+        filter: blur(2px);
     }
-}
-
-section.your-active-class ~ .floating-shapes .floating-shape {
-    animation-duration: 15s;
-    filter: blur(0);
-}
-
-.shape1 { top: 5%; left: 5%; font-size: 48px; animation: float 20s infinite, glow 3s infinite alternate; }
-.shape2 { top: 20%; right: 10%; font-size: 36px; animation: float-reverse 20s infinite, glow 3s infinite alternate; }
-.shape3 { bottom: 15%; left: 15%; font-size: 42px; animation: float-diagonal 20s infinite, glow 3s infinite alternate; }
-.shape4 { top: 40%; right: 5%; font-size: 40px; animation: float 20s infinite, glow 3s infinite alternate; }
-.shape5 { bottom: 10%; right: 20%; font-size: 44px; animation: float-reverse 20s infinite, glow 3s infinite alternate; }
-.shape6 { top: 60%; left: 10%; font-size: 38px; animation: float-diagonal 20s infinite, glow 3s infinite alternate; }
-.shape7 { top: 80%; right: 15%; font-size: 50px; animation: float 20s infinite, glow 3s infinite alternate; }
-.shape8 { bottom: 30%; left: 25%; font-size: 46px; animation: float-reverse 20s infinite, glow 3s infinite alternate; }
-.shape9 { top: 10%; left: 30%; font-size: 48px; animation: float-diagonal 20s infinite, glow 3s infinite alternate; }
-.shape10 { top: 25%; right: 25%; font-size: 36px; animation: float 20s infinite, glow 3s infinite alternate; }
-.shape11 { bottom: 20%; left: 5%; font-size: 42px; animation: float-reverse 20s infinite, glow 3s infinite alternate; }
-.shape12 { top: 50%; right: 15%; font-size: 40px; animation: float-diagonal 20s infinite, glow 3s infinite alternate; }
-.shape13 { bottom: 5%; right: 10%; font-size: 44px; animation: float 20s infinite, glow 3s infinite alternate; }
-.shape14 { top: 70%; left: 20%; font-size: 38px; animation: float-reverse 20s infinite, glow 3s infinite alternate; }
-.shape15 { top: 90%; right: 5%; font-size: 50px; animation: float-diagonal 20s infinite, glow 3s infinite alternate; }
-.shape16 { bottom: 25%; left: 30%; font-size: 46px; animation: float 20s infinite, glow 3s infinite alternate; }
-
-@keyframes float {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-20px, 20px) rotate(5deg); }
-    50% { transform: translate(20px, -20px) rotate(-5deg); }
-    75% { transform: translate(-15px, -15px) rotate(3deg); }
 }
 
 @keyframes float-reverse {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(20px, -20px) rotate(-5deg); }
-    50% { transform: translate(-20px, 20px) rotate(5deg); }
-    75% { transform: translate(15px, 15px) rotate(-3deg); }
+    0%, 100% { 
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        filter: blur(1px);
+    }
+    50% { 
+        transform: translate(20px, -20px) rotate(-5deg) scale(1.2);
+        filter: blur(2px);
+    }
 }
 
 @keyframes float-diagonal {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(15px, 15px) rotate(10deg); }
-    50% { transform: translate(-15px, -15px) rotate(-10deg); }
-    75% { transform: translate(10px, -10px) rotate(5deg); }
-}
-
-@keyframes glow {
-    0% { 
-        text-shadow: 0 0 20px var(--primary-color);
-        opacity: 0.2;
+    0%, 100% { 
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        filter: blur(1px);
     }
-    100% { 
-        text-shadow: 0 0 40px var(--primary-color), 0 0 60px var(--primary-color);
-        opacity: 0.3; 
+    50% { 
+        transform: translate(15px, 15px) rotate(10deg) scale(1.15);
+        filter: blur(2px);
     }
 }
 
+/* Add subtle background effect */
 .floating-shape::before {
     content: '';
     position: absolute;
@@ -107,6 +107,20 @@ section.your-active-class ~ .floating-shapes .floating-shape {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(var(--primary-color-rgb), 0.2) 0%, transparent 9%);
+    background: radial-gradient(
+        circle, 
+        rgba(0, 255, 179, 0.1) 0%, 
+        rgba(108, 99, 255, 0.05) 50%,
+        transparent 70%
+    );
     z-index: -1;
+    opacity: 0.3;
+    filter: blur(10px);
+}
+
+/* Active section enhancement */
+section.your-active-class ~ .floating-shapes .floating-shape {
+    animation-duration: 15s;
+    filter: blur(0);
+    opacity: 0.25;
 }
