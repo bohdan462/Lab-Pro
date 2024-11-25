@@ -159,7 +159,7 @@
     </section>
     <section id="section2" data-nav="Donut ASCII Lab">
       <div class="landing__container">
-        <h3> Donut ASCII Lab</h3>
+        
         <div class="lab-container">
           <div class="donut-shape">
             <pre id="donut"></pre>
@@ -170,92 +170,64 @@
     </section>
     <section id="section3" data-nav="Minimax() Theory">
       <div class="landing__container">
-        <h2>The Art of Perfect Play: Inside the Minimax Algorithm</h2>
+        <h2>Minimax Algorithm: The Mathematics of Perfect Play</h2>
+        
         <p>
-          What if I told you that a simple recursive algorithm could turn our Tic Tac Toe AI into an unbeatable opponent? Let's dive into the fascinating world of the Minimax algorithm - where every move is calculated with mathematical precision.
+          At its core, the Minimax algorithm is a recursive decision-making process that simulates all possible game states to find the optimal move. Let's explore the mathematical foundation behind this powerful algorithm.
         </p>
 
-        <h3>Understanding the Strategy</h3>
+        <h3>Mathematical Foundation</h3>
         <p>
-          Imagine you're playing chess, thinking several moves ahead. That's exactly what Minimax does, but it explores <em>every possible move</em> until the game ends. Here's how it thinks:
+          The algorithm works on a simple yet powerful principle: maximize your minimum gain (or minimize your maximum loss). In game theory terms:
         </p>
-        <ul class="strategy-list">
-          <li>If AI wins: Score = +10</li>
-          <li>If Human wins: Score = -10</li>
-          <li>If Draw: Score = 0</li>
-        </ul>
+        <div class="formula">
+          <code>minimax(state) = max(min(possible outcomes))</code><br>
+          <code>maximin(state) = min(max(possible outcomes))</code>
+        </div>
 
-        <h3>The Algorithm's Brain</h3>
+        <h3>Game Tree Traversal</h3>
         <p>
-          The magic happens in three key steps:
+          Each game state can be represented as a node in a tree, where:
         </p>
-        <div class="algorithm-steps">
-          <h4>1. Evaluation Function</h4>
-          <div class="code-block">
-        <div class="code-block">
-          <code>const board = [</code><br>
-          <code>  ['', '', ''],</code><br>
-          <code>  ['', '', ''],</code><br>
-          <code>  ['', '', '']</code><br>
-          <code>];</code>
+        <div class="formula">
+          <code>Value(node) = max(min(Value(children)))</code><br>
+          <code>Depth(tree) ≤ 9! (factorial)</code>
         </div>
+
+        <h3>State Evaluation Function</h3>
         <p>
-          Players alternate turns, placing their marks (X or O) in empty cells. The human player usually starts, but the AI is always ready to challenge.
+          The evaluation function maps game states to numerical values:
         </p>
-    
-        <h3>Minimax Algorithm</h3>
-        <p>
-          The Minimax algorithm is the AI's secret weapon, evaluating every possible move to ensure it plays flawlessly.
-        </p>
-    
-        <h4>1. Evaluating Moves</h4>
-        <p>
-          The AI simulates the game to its conclusion, scoring each outcome:
-        </p>
-        <div class="code-block">
-          <code>let scores = {</code><br>
-          <code>  AI: 10,</code><br>
-          <code>  Player: -10,</code><br>
-          <code>  tie: 0</code><br>
-          <code>};</code>
+        <div class="formula">
+          <code>f(state) = 10 - depth  // for winning states</code><br>
+          <code>f(state) = -10 + depth // for losing states</code><br>
+          <code>f(state) = 0          // for draw states</code>
         </div>
+
+        <h3>Recursive Tree Search</h3>
         <p>
-          A win for the AI is a triumph (+10), a win for the human is a setback (-10), and a tie is a stalemate (0).
+          The algorithm implements a depth-first search with alternating min/max layers:
         </p>
-    
-        <h4>2. Recursive Exploration</h4>
-        <p>
-          The algorithm delves into every possible move, using a depth-first search to explore the game tree:
-        </p>
-        <div class="code-block">
-          <code>function minimax(board, depth, isMaximizing) {</code><br>
-          <code>  // Base case: check for a winner</code><br>
-          <code>  let result = checkWinner();</code><br>
-          <code>  if (result !== null) {</code><br>
-          <code>    return scores[result];</code><br>
-          <code>  }</code><br>
-          <code>  // Recursive case: explore moves</code><br>
-          <code>}</code>
+        <div class="formula">
+          <code>v = max(v, -negamax(child, depth+1))</code>
         </div>
+
         <p>
-          The AI alternates between maximizing and minimizing scores, depending on whose turn it is.
+          This recursive formula elegantly captures the zero-sum nature of the game, where one player's gain is exactly equal to the other's loss.
         </p>
-    
-        <h4>3. Making the Best Move</h4>
+
+        <h3>Time Complexity Analysis</h3>
         <p>
-          The AI selects the move with the highest score, ensuring it plays optimally:
+          The computational complexity follows:
         </p>
-        <div class="code-block">
-          <code>function bestMove() {</code><br>
-          <code>  let bestScore = -Infinity;</code><br>
-          <code>  let move;</code><br>
-          <code>  // Evaluate each move</code><br>
-          <code>}</code>
+        <div class="formula">
+          <code>O(b^d)</code><br>
+          <code>where: b = branching factor (≤9)</code><br>
+          <code>       d = maximum depth (≤9)</code>
         </div>
-    
-        <h3>Conclusion</h3>
-        <p>
-          With the Minimax algorithm, our Tic Tac Toe AI is unbeatable, turning a simple game into a strategic challenge. It evaluates every possibility, ensuring that every move is the best move, and every game is a test of skill.
+
+        <p class="conclusion">
+          Through this mathematical framework, we achieve perfect play by systematically exploring all possible game states, ensuring optimal decisions at every turn.
         </p>
       </div>
     </section>
