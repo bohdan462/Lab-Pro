@@ -34,11 +34,7 @@
         </svg>
     </div>
     <ul id="navbar__list"></ul>
-      
-     
-      
     </nav>
-    
   </header>
   <main>
     <header class="main__hero">
@@ -52,83 +48,115 @@
       <div class="landing__container">
         <h2>Donut Math: The Art of Spinning ASCII</h2>
         <p>
-          Ever wondered how a simple ASCII donut can spin so mesmerizingly on your screen? It's all about the math and a bit of programming magic. Let's dive into the fascinating world of torus geometry and projection to unravel this mystery.
+          Ever wondered how a simple ASCII donut can spin so mesmerizingly on your screen? Let's dive into the fascinating world of 3D graphics, where math meets art. I'll show you how we can create a rotating donut using nothing but text characters!
         </p>
-        <h3>Mathematical Foundations</h3>
-        <h4>1. Torus Geometry</h4>
+
+        <h3>The Journey from 3D to ASCII</h3>
         <p>
-          Picture a donut. Not the kind you eat, but a torus—a 3D shape defined by two radii:
+          Think of this as a three-step journey:
+          <ol>
+            <li>Creating a 3D donut (torus) in mathematical space</li>
+            <li>Projecting it onto your 2D screen</li>
+            <li>Converting the result into ASCII art with shading</li>
+          </ol>
+        </p>
+
+        <h3>Step 1: Building Our Donut</h3>
+        <p>
+          First, let's understand what a donut (torus) really is. Imagine taking a circle and spinning it around an axis, like a hoop twirling around a pole. This creates our donut shape, defined by two key measurements:
+        </p>
+        <div class="formula">
+          <code>R₁: The radius of the tube (the thickness of our donut)</code><br>
+          <code>R₂: The distance from the center to the middle of the tube</code>
+        </div>
+        <p>
+          In our code, we use R₁ = 1 and R₂ = 2, giving us a nice, plump donut. But here's where it gets interesting. To describe any point on our donut, we need two angles:
+        </p>
+        <div class="formula">
+          <code>θ (theta): Spins around the tube (0 to 2π)</code><br>
+          <code>φ (phi): Rotates around the center (0 to 2π)</code>
+        </div>
+
+        <h3>The Magic Equations</h3>
+        <p>
+          Now comes the beautiful part. For any combination of θ and φ, we can find the exact position of a point on our donut using these parametric equations:
+        </p>
+        <div class="formula">
+          <code>x = (R₂ + R₁cosθ)cosφ</code><br>
+          <code>y = (R₂ + R₁cosθ)sinφ</code><br>
+          <code>z = R₁sinθ</code>
+        </div>
+        <p>
+          Let's break this down:
           <ul>
-            <li><strong>R<sub>1</sub></strong>: The radius of the tube</li>
-            <li><strong>R<sub>2</sub></strong>: The distance from the center of the tube to the center of the torus</li>
+            <li><code>R₂ + R₁cosθ</code> gives us the distance from the center for each circle slice</li>
+            <li>Multiplying by <code>cosφ</code> and <code>sinφ</code> rotates this point around the central axis</li>
+            <li><code>R₁sinθ</code> determines the height of each point on the tube</li>
           </ul>
-          The magic begins with these parametric equations:
+        </p>
+
+        <h3>Step 2: The Art of Projection</h3>
+        <p>
+          But wait! Our screen is flat (2D), and our donut lives in 3D space. We need to project it, like creating a shadow puppet. This is where perspective projection comes in:
         </p>
         <div class="formula">
-          <code>x = (R<sub>2</sub> + R<sub>1</sub>cosθ)cosφ</code><br>
-          <code>y = (R<sub>2</sub> + R<sub>1</sub>cosθ)sinφ</code><br>
-          <code>z = R<sub>1</sub>sinθ</code>
+          <code>x' = K₁ * x / (K₂ + z)</code><br>
+          <code>y' = K₁ * y / (K₂ + z)</code>
         </div>
-
-        <h4>2. 3D to 2D Projection</h4>
         <p>
-          To bring our 3D torus to life on a 2D screen, we project each point using:
+          Here's the clever bit: K₁ and K₂ are our magic numbers:
+          <ul>
+            <li>K₁ = 150: Controls how big the projection appears</li>
+            <li>K₂ = 5: Determines the viewing distance (smaller = more perspective distortion)</li>
+          </ul>
+          The division by (K₂ + z) creates that 3D perspective effect - things further away appear smaller!
+        </p>
+
+        <h3>Step 3: Bringing Light to Life</h3>
+        <p>
+          Now for the real magic - making it look 3D using nothing but text characters. We calculate how much light each point receives using surface normals (vectors perpendicular to the surface):
         </p>
         <div class="formula">
-          <code>x' = K<sub>1</sub> * x / (K<sub>2</sub> + z)</code><br>
-          <code>y' = K<sub>1</sub> * y / (K<sub>2</sub> + z)</code>
+          <code>Normal = [cosθcosφ, cosθsinφ, sinθ]</code><br>
+          <code>Light = [0, 1, -1] (normalized)</code><br>
+          <code>Luminance = Normal · Light</code>
         </div>
         <p>
-          Here, <strong>K<sub>1</sub></strong> and <strong>K<sub>2</sub></strong> are our trusty constants, tweaking the scale and depth to perfection.
+          This dot product gives us a luminance value between -1 and 1. We map this to our ASCII palette:
+          <code>.,-~:;=!*#$@</code> (from darkest to brightest). Each character's density creates the illusion of shading!
         </p>
 
-        <h4>3. Lighting and Shading</h4>
+        <h3>Putting It All Together</h3>
         <p>
-          The secret sauce? Lighting. We calculate brightness using the dot product of the surface normal and a light direction vector:
-        </p>
-        <div class="formula">
-          <code>L = cosφcosθsinB - cosAcosθsinφ - sinAsinθ + cosB(cosAsinθ - cosθsinAsinφ)</code>
-        </div>
-        <p>
-          This luminance value <strong>L</strong> is then mapped to ASCII characters: <code>.,-~:;=!*#$@</code>, creating the illusion of depth and texture.
+          For each frame of animation:
+          <ol>
+            <li>We rotate our donut by updating angles A and B</li>
+            <li>Calculate each point's 3D position</li>
+            <li>Project it to 2D</li>
+            <li>Calculate its brightness</li>
+            <li>Choose the right ASCII character</li>
+            <li>Handle overlapping parts using a z-buffer</li>
+          </ol>
         </p>
 
-        <h3>JavaScript Implementation</h3>
-        
-        <h4>1. Core Variables</h4>
         <div class="code-block">
-          <code>var A = 1, B = 1; // Rotation angles</code><br>
-          <code>var R1 = 1, R2 = 2; // Torus radii</code><br>
-          <code>var K1 = 150, K2 = 5; // Projection constants</code>
-        </div>
-
-        <h4>2. Animation Loop</h4>
-        <p>
-          The donut spins with a simple trick: incrementing the rotation angles:
-        </p>
-        <div class="code-block">
-          <code>A += 0.07; // Increment angle A</code><br>
-          <code>B += 0.03; // Increment angle B</code>
-        </div>
-
-        <h4>3. Frame Rendering</h4>
-        <p>
-          Each frame is a masterpiece, calculated and projected, pixel by pixel:
-        </p>
-        <div class="code-block">
-          <code>function renderAsciiFrame() {</code><br>
-          <code>  // Calculate positions and luminance</code><br>
-          <code>  // Update ASCII buffer</code><br>
+          <code>// The heart of our animation</code><br>
+          <code>function renderFrame() {</code><br>
+          <code>  A += 0.07; // Rotate around X</code><br>
+          <code>  B += 0.03; // Rotate around Z</code><br>
+          <code>  // ... magic happens here ...</code><br>
           <code>}</code>
         </div>
 
-        <h3>Conclusion</h3>
+        <p class="note">
+          <strong>Fun Fact:</strong> This entire animation runs at 60fps using pure CPU calculations - no GPU required! It's a beautiful example of how simple math can create complex, mesmerizing visuals.
+        </p>
+
         <p>
-          The spinning ASCII donut is more than just a visual treat; it's a testament to the beauty of mathematics and programming. With a few equations and some clever coding, we create a dynamic piece of art that captivates and inspires.
+          Want to experiment? Try tweaking R₁ and R₂ for different donut shapes, or modify K₁ and K₂ for wild perspective effects. You can even create your own ASCII palette for different visual styles!
         </p>
       </div>
     </section>
-    
     <section id="section2" data-nav="Donut ASCII Lab">
       <div class="landing__container">
         <h3> Donut ASCII Lab</h3>
@@ -140,20 +168,30 @@
         </div>
       </div>
     </section>
-
-   
-
     <section id="section3" data-nav="Minimax() Theory">
       <div class="landing__container">
-        <h2>Tic Tac Toe: Mastering Strategy with Minimax</h2>
+        <h2>The Art of Perfect Play: Inside the Minimax Algorithm</h2>
         <p>
-          Tic Tac Toe might seem simple, but with the Minimax algorithm, it becomes a battleground of strategy and foresight. Let's explore how this algorithm turns a humble game into a test of wits.
+          What if I told you that a simple recursive algorithm could turn our Tic Tac Toe AI into an unbeatable opponent? Let's dive into the fascinating world of the Minimax algorithm - where every move is calculated with mathematical precision.
         </p>
-    
-        <h3>Game Setup</h3>
+
+        <h3>Understanding the Strategy</h3>
         <p>
-          Our battlefield is a 3x3 grid, elegantly represented in JavaScript as:
+          Imagine you're playing chess, thinking several moves ahead. That's exactly what Minimax does, but it explores <em>every possible move</em> until the game ends. Here's how it thinks:
         </p>
+        <ul class="strategy-list">
+          <li>If AI wins: Score = +10</li>
+          <li>If Human wins: Score = -10</li>
+          <li>If Draw: Score = 0</li>
+        </ul>
+
+        <h3>The Algorithm's Brain</h3>
+        <p>
+          The magic happens in three key steps:
+        </p>
+        <div class="algorithm-steps">
+          <h4>1. Evaluation Function</h4>
+          <div class="code-block">
         <div class="code-block">
           <code>const board = [</code><br>
           <code>  ['', '', ''],</code><br>
@@ -225,9 +263,6 @@
     <section id="section4" data-nav="Tic Tac Toe Lab">
       
       <div class="landing__container">
-        <h3>Tic Tac Toe Lab</h3>
-  
-  
         <div id="tictactoe-container">
    
         </div>
@@ -260,12 +295,6 @@
   
     </div>
     </section>
-    
-
-
-
-   
-
   </main>
   <footer class="page__footer">
     <div class="footer__content">

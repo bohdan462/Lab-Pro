@@ -11,21 +11,21 @@
 
 :root {
     /* Primary Colors */
-    --color-primary: #00ffb3;      /* Bright Cyan - for highlights and accents */
-    --color-secondary: #6c63ff;    /* Electric Purple - for secondary elements */
+    --color-primary: #00ffb3;    
+    --color-secondary: #6c63ff;   
     
     /* Background Colors */
-    --color-background: #0a0b1e;   /* Deep Navy Black - main background */
-    --color-surface: #151633;      /* Lighter Navy - for cards and sections */
+    --color-background: #0a0b1e;   
+    --color-surface: #151633;     
     
     /* Text Colors */
-    --color-text: #e2e4ff;         /* Soft White with blue tint */
-    --color-text-secondary: #8a8dba;/* Muted Purple */
-    --color-code: #00ffb3;         /* Same as primary */
+    --color-text: #e2e4ff;         
+    --color-text-secondary: #8a8dba;
+    --color-code: #00ffb3;         
     
     /* Accent Colors */
-    --color-accent-1: #ff3366;     /* Hot Pink */
-    --color-accent-2: #3dfff4;     /* Bright Turquoise */
+    --color-accent-1: #ff3366;    
+    --color-accent-2: #3dfff4;     
     
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
@@ -230,16 +230,16 @@ main {
     z-index: 1001;
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     animation: 
-        iconPulse 2s ease-in-out infinite,      
-        acidColorChange 8s linear infinite,          
-        zoomInOut 1s ease-out forwards;     
+        iconPulse 2s ease-in-out,     
+        acidColorChange 2s linear,     
+        zoomInOut 1s ease-out forwards;
 }
 
 .floating-nav-icon svg {
     width: 24px;
     height: 24px;
     fill: var(--color-background);
-    animation: iconSpin 8s linear infinite;     
+    animation: iconSpin 2s linear;
 }
 
 
@@ -309,6 +309,8 @@ main {
 .floating-nav-icon:hover {
     transform: translateX(-50%) scale(1.1);
     transition: transform 0.3s ease;
+    background: var(--color-primary);
+    box-shadow: 0 0 20px var(--color-primary);
 }
 
 @media only screen and (max-width: 768px) {
@@ -316,6 +318,8 @@ main {
         top: 1rem;
         width: 40px;
         height: 40px;
+        animation: 
+            portalTransport 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
     .navbar__menu ul {
         display: none;
@@ -338,6 +342,49 @@ main {
 
     .toggle-menu {
         display: none; 
+    }
+
+    .floating-nav-icon::before,
+    .floating-nav-icon::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: transparent;
+        animation: portalRing 2s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+    }
+
+    .floating-nav-icon svg {
+        animation: fadeInSpin 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+}
+
+@keyframes portalTransport {
+    0% {
+        top: calc(14vh + 4rem);
+        transform: translate(-50%, 0) scale(0.1);
+        filter: hue-rotate(0deg) brightness(2);
+        box-shadow: 
+            0 0 50px var(--color-primary),
+            0 0 100px var(--color-secondary),
+            inset 0 0 30px var(--color-accent-1);
+    }
+    50% {
+        top: 50vh;
+        transform: translate(-50%, 0) scale(2);
+        filter: hue-rotate(180deg) brightness(3);
+        box-shadow: 
+            0 0 100px var(--color-primary),
+            0 0 200px var(--color-secondary),
+            inset 0 0 60px var(--color-accent-1);
+    }
+    100% {
+        top: 1rem;
+        transform: translate(-50%, 0) scale(1);
+        filter: hue-rotate(360deg) brightness(1);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
 }
 
@@ -490,7 +537,7 @@ main {
 @media only screen and (min-width: 35em){
     .landing__container {
         max-width: 50em;
-        padding: 4em;
+        /* padding: 4em; */
     }
 
     
