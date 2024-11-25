@@ -8,8 +8,8 @@
     var A = 1;
     var B = 1;
 
-    var intervalId = null; // Store interval ID for animation
-    var observer = null;  // Store IntersectionObserver reference
+    var intervalId = null;
+    var observer = null; 
 
     /**
      * @description Renders a single frame of the ASCII animation
@@ -84,7 +84,7 @@
 
         preTag.innerHTML = html;
 
-        // Clear arrays to release memory
+     
         b.length = 0;
         z.length = 0;
     }
@@ -95,7 +95,7 @@
      */
     function startAsciiAnimation() {
         if (!intervalId) {
-            intervalId = setInterval(renderAsciiFrame, 100);
+            intervalId = setInterval(renderAsciiFrame, 50);
         }
     }
 
@@ -109,11 +109,8 @@
             intervalId = null;
         }
 
-        // Clear the content in the target element to release memory
         preTag.innerHTML = '';
     }
-
-    // Use Intersection Observer to manage visibility
     observer = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
@@ -124,15 +121,13 @@
                 }
             });
         },
-        { threshold: 0.1 } // Trigger when 10% of the element is visible
+        { threshold: 0.1 } 
     );
 
     observer.observe(preTag);
 
-    // Rerender frame on window resize
     window.addEventListener('resize', renderAsciiFrame);
 
-    // Cleanup on unload
     window.addEventListener('unload', () => {
         stopAsciiAnimation();
         if (observer) {

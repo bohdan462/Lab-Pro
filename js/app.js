@@ -35,13 +35,15 @@ function scrollToSection(event) {
         const targetId = event.target.getAttribute('href');
         const targetSection = document.querySelector(targetId);
         if (targetSection) {
+            const headerOffset = document.querySelector('.page__header').offsetHeight || 0;
             window.scrollTo({
                 behavior: 'smooth',
-                top: targetSection.offsetTop - 60
+                top: targetSection.offsetTop - headerOffset
             });
         }
     }
 }
+
 
 /**
  * @description Observes sections for viewport visibility and updates active states
@@ -51,24 +53,31 @@ function observeSections() {
     const observerOptions = {
         root: null,
         rootMargin: '-10% 0px -10% 0px',
-        threshold: [0.2, 0.5, 0.8]
+        threshold: [0.1, 0.25, 0.5, 0.75, 1] 
     };
 
     const observer = new IntersectionObserver((entries) => {
-        // Sort entries by intersection ratio
-        entries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        const mostVisible = entries.find(entry => entry.isIntersecting);
-        
-        if (mostVisible) {
-            updateActiveStates(mostVisible.target);
+        // Find the entry with the highest intersection ratio
+        let mostVisibleEntry = null;
+        let highestRatio = 0;
+
+        entries.forEach((entry) => {
+            if (entry.isIntersecting && entry.intersectionRatio > highestRatio) {
+                highestRatio = entry.intersectionRatio;
+                mostVisibleEntry = entry;
+            }
+        });
+
+        if (mostVisibleEntry) {
+            updateActiveStates(mostVisibleEntry.target);
         }
     }, observerOptions);
 
     sections.forEach(section => {
         observer.observe(section);
-        section.style.transition = 'all 0.5s ease';
     });
 }
+
 
 /**
  * @description Updates active states for sections and navigation items
@@ -107,38 +116,50 @@ function handleMobileMenu() {
     const floatingIcon = document.querySelector('.floating-nav-icon');
     const navbar = document.querySelector('.navbar__menu');
 
+    /**
+     * @description Closes the menu and resets all states
+     */
     function closeMenu() {
         navbar.classList.remove('active');
         if (toggle) toggle.classList.remove('active');
         if (floatingIcon) floatingIcon.classList.remove('active');
     }
 
-    // Toggle menu with the toggle button
     if (toggle) {
-        toggle.addEventListener('click', () => {
+        toggle.addEventListener('click', (event) => {
+            event.stopPropagation(); 
             navbar.classList.toggle('active');
             toggle.classList.toggle('active');
         });
     }
 
-    // Toggle menu with the floating icon
     if (floatingIcon) {
-        floatingIcon.addEventListener('click', () => {
+        floatingIcon.addEventListener('click', (event) => {
+            event.stopPropagation(); 
             navbar.classList.toggle('active');
             floatingIcon.classList.toggle('active');
         });
     }
 
-    // Close menu when clicking outside or on a menu link
+ 
     document.addEventListener('click', (event) => {
-        if (
-            (!navbar.contains(event.target) && !toggle.contains(event.target) && !floatingIcon.contains(event.target)) ||
-            event.target.classList.contains('menu__link')
-        ) {
+        const clickedInsideNavbar = navbar.contains(event.target);
+        const clickedInsideToggle = toggle && toggle.contains(event.target);
+        const clickedInsideFloatingIcon = floatingIcon && floatingIcon.contains(event.target);
+
+        if (!clickedInsideNavbar && !clickedInsideToggle && !clickedInsideFloatingIcon) {
+            closeMenu();
+        }
+    });
+
+   
+    navbar.addEventListener('click', (event) => {
+        if (event.target.classList.contains('menu__link')) {
             closeMenu();
         }
     });
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     buildNavbar();

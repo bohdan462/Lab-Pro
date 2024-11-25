@@ -149,7 +149,11 @@ main {
 
 .main-hero {
     min-height: 40vh;
-    padding-top: 3em;
+    padding-top: 1em;
+}
+
+.main__hero {
+    padding-top: 5em;
 }
 
 
@@ -294,6 +298,9 @@ main {
 }
 
 @media only screen and (max-width: 768px) {
+    .main__hero {
+        padding-top: 0.5em;
+    }
     .floating-nav-icon {
         top: 1rem;
         width: 40px;
