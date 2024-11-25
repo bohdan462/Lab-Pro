@@ -27,37 +27,65 @@ function buildNavbar() {
     navbarList.appendChild(fragment);
 }
 
-/**
- * Highlight the active section and corresponding navbar link
- */
-// Observe sections and determine the current visible section
 function observeSections() {
     const observerOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.5,
+        // Adjust rootMargin to start detecting earlier
+        rootMargin: '-10% 0px -10% 0px',
+        // Lower threshold to catch sections earlier
+        threshold: [0.2, 0.5, 0.8]
     };
 
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                // Remove active classes
-                document.querySelectorAll('section').forEach(section => 
-                    section.classList.remove('your-active-class'));
-                document.querySelectorAll('.menu__link').forEach(link => 
-                    link.classList.remove('active'));
-
-                // Add active classes
-                entry.target.classList.add('your-active-class');
-                const activeLink = document.querySelector(
-                    `.menu__link[href="#${entry.target.id}"]`
-                );
-                if (activeLink) activeLink.classList.add('active');
-            }
+        // Sort entries by visibility ratio to handle overlapping sections
+        entries.sort((a, b) => {
+            return b.intersectionRatio - a.intersectionRatio;
         });
+
+        // Get the most visible section
+        const mostVisible = entries.find(entry => entry.isIntersecting);
+        
+        if (mostVisible) {
+            // Remove active classes from all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('your-active-class');
+                section.style.opacity = '0.7';
+                section.style.transform = 'translateX(-20px)';
+            });
+
+            // Remove active classes from all links
+            document.querySelectorAll('.menu__link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Add active classes to current section
+            mostVisible.target.classList.add('your-active-class');
+            mostVisible.target.style.opacity = '1';
+            mostVisible.target.style.transform = 'translateX(0)';
+
+            // Update navigation
+            const activeLink = document.querySelector(
+                `.menu__link[href="#${mostVisible.target.id}"]`
+            );
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+
+            // Animate content
+            const content = mostVisible.target.querySelector('.landing__container');
+            if (content) {
+                content.style.transform = 'translateX(0)';
+                content.style.opacity = '1';
+            }
+        }
     }, observerOptions);
 
-    sections.forEach(section => observer.observe(section));
+    // Observe all sections
+    sections.forEach(section => {
+        observer.observe(section);
+        // Initialize styles
+        section.style.transition = 'all 0.5s ease';
+    });
 }
 
 /**

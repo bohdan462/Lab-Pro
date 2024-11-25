@@ -21,9 +21,24 @@
 
 }
 
+pre {
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 1;
+    white-space: pre;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9); 
+    width: fit-content;
+  } 
+
 
 /* Responsive adjustments */
 @media only screen and (max-width: 768px) {
+  .lab-container {
+    height: 30em;
+  }
   .donut-shape {
       max-width: 300px;
   }

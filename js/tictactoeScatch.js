@@ -141,8 +141,7 @@ function updateDisplay() {
         const row = cell.dataset.row;
         const col = cell.dataset.col;
         const value = board[row][col];
-        
-        // Set the text content based on the value
+   
         if (value === 'AI') {
             cell.textContent = 'X';
         } else if (value === 'Player') {
