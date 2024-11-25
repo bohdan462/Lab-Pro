@@ -21,7 +21,7 @@
 
 pre {
     font-family: monospace;
-    font-size: 10px;
+    font-size: 8px;
     line-height: 1;
     white-space: pre;
     position: absolute;
@@ -43,8 +43,8 @@ pre {
   }
   
   pre {
-      font-size: 8px;
-      transform: translate(-50%, -50%) scale(0.8);
+      font-size: 4px;
+      transform: translate(-50%, -50%) scale(0.7);
   }
 }
 
@@ -55,6 +55,6 @@ pre {
   
   pre {
       font-size: 6px;
-      transform: translate(-50%, -50%) scale(0.7);
+      transform: translate(-50%, -50%) scale(0.6);
   }
 }
