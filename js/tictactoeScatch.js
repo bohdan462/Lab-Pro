@@ -1,12 +1,30 @@
 const startGameButton = document.getElementById('start-game');
 
 const aiMessages = {
-    start: "I'll let you go first. Choose wisely...",
+    start: {
+        humanFirst: "I'll let you go first. Choose wisely...",
+        aiFirst: "This time, I'll make the first move..."
+    },
     playerMove: [
         "Interesting choice...",
         "Is that the best you can do?",
         "Hmm, I saw that coming.",
-        "Playing it safe, aren't we?"
+        "Playing it safe, aren't we?",
+        "Clever move, but not clever enough.",
+        "Oh, so you're going for that strategy, huh?",
+        "I've seen better moves.",
+        "Are you sure about that?",
+        "Trying to trick me, are you?",
+        "You're making this fun!",
+        "A bold move, human.",
+        "Ah, the classic approach.",
+        "You're predictable, but let's see where this goes."
+    ],
+    aiMove: [
+        "Watch this move...",
+        "Let me show you how it's done.",
+        "My turn, human.",
+        "This should be interesting..."
     ],
     aiWin: [
         "As expected, I win again!",
@@ -35,7 +53,7 @@ const board = [
 let humanScore = 0;
 let aiScore = 0;
 let ai = 'AI';
-let human = 'Player'
+let human = 'Player';
 let currentPlayer = human;
 let isHumanFirst = true;
 
@@ -46,7 +64,7 @@ function createBoard() {
     const messageDisplay = document.createElement('div');
     messageDisplay.id = 'ai-message';
     messageDisplay.className = 'ai-message';
-    messageDisplay.textContent = aiMessages.start;
+    messageDisplay.textContent = isHumanFirst ? aiMessages.start.humanFirst : aiMessages.start.aiFirst;
     container.appendChild(messageDisplay);
 
 
@@ -123,10 +141,28 @@ function updateDisplay() {
         const row = cell.dataset.row;
         const col = cell.dataset.col;
         const value = board[row][col];
-        cell.textContent = value === 'AI' ? 'X' : value === 'Player' ? 'O' : '';
-        cell.className = `grid-cell ${value ? 'filled' : ''}`;
+        
+        // Set the text content based on the value
+        if (value === 'AI') {
+            cell.textContent = 'X';
+        } else if (value === 'Player') {
+            cell.textContent = 'O';
+        } else {
+            cell.textContent = '';
+        }
+        
+        // Set the class names
+        let classes = ['grid-cell'];
+        if (value) {
+            classes.push('filled');
+            if (value === 'AI') {
+                classes.push('ai-cell');
+            } else if (value === 'Player') {
+                classes.push('human-cell');
+            }
+        }
+        cell.className = classes.join(' ');
     });
-
 }
 
 function checkWinner() {
@@ -175,9 +211,9 @@ function handleGameEnd(result) {
         
         setTimeout(() => {
             if (result === 'tie') {
-                alert(`Game Over! TIE!`);
+                // alert(`Game Over! TIE!`);
             } else {
-                alert(`Winner: ${result}`);
+                // alert(`Winner: ${result}`);
                 if (result === human) {
                     humanScore++;
                     document.getElementById('human-score').textContent = humanScore;
@@ -210,58 +246,6 @@ function resetGame() {
     currentPlayer = isHumanFirst ? human : ai;
 
 }
-
-const additionalStyles = `
-.ai-message {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.2em;
-    color: #000;
-    font-family: 'Fira Code', monospace;
-    min-height: 1.5em;
-    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-}
-`;
-
-const styles = `
-${additionalStyles}
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    width: 300px;
-    height: 300px;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.grid-cell {
-    background: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #fff;
-    transition: background-color 0.3s;
-}
-
-.grid-cell:hover:empty {
-    background: #333;
-}
-
-.grid-cell.filled {
-    cursor: not-allowed;
-}
-`;
-
-
-
-// Add styles to document
-const styleSheet = document.createElement("style");
-styleSheet.textContent = styles;
-document.head.appendChild(styleSheet);
 
 // Initialize game
 document.addEventListener('DOMContentLoaded', () => {

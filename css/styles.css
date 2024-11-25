@@ -29,10 +29,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 20px auto;
-    width: 400px;
-    background: #fff;
-    opacity: 0.1;
+    margin: 50px auto;
+  
+    width: 500px;
+    height: 500px;
+    background: #ff0;
+    opacity: 0.9;
 }
 
 pre {
@@ -81,12 +83,13 @@ pre {
 }
 
 #start-game {
-    background-color: #28a745; /* Green background */
-    color: white;
+    background-color: #ff0; /* Green background */
+    color: black;
 }
 
 #start-game:hover {
-    background-color: #218838; /* Darker green on hover */
+    background-color: #ff01; /* Darker green on hover */
+    color: ff0;
 }
 
 #reset-scores {
@@ -100,9 +103,12 @@ pre {
 
 /* Button styling */
 button {
-    padding: 10px 20px;
+    padding: 10px;
     font-size: 1rem;
+    text-align: center;
     border: none;
+    width: 100px;
+    height: 50px;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -246,6 +252,59 @@ main {
     margin: 0 auto;
     padding: 1em;
     position: relative;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    width: 300px;
+    height: 300px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.grid-cell {
+    background: #1a1a1a;
+    display: flex;
+    width: 100px;
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.grid-cell:hover:empty {
+    background: #333;
+}
+
+.grid-cell.filled {
+    cursor: default;
+    pointer-events: none;
+}
+
+.ai-cell {
+    color: #ff0;
+}
+
+.human-cell {
+    color: #ff0;
+}
+
+.ai-message {
+    text-align: center;
+    margin-bottom: 2em;
+    font-size: 1em;
+    color: 000;
+    font-family: 'Fira Code', monospace;
+    min-height: 1em;
+    max-height: 2em;
+    max-width: 15em;
+   
 }
 
 @media only screen and (min-width: 35em){

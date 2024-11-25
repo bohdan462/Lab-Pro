@@ -59,16 +59,32 @@
                 // Update ascii char and depth if conditions are met
                 if (y < height && y >= 0 && x >= 0 && x < width && D > z[o]) {
                     z[o] = D;
+
+                    var ch = '.,-~0=!*0#$@'[N > 0 ? N : 0];
                     // Update ascii char based on the index
-                    b[o] = '.,-~:;=!*#$@'[N > 0 ? N : 0];
+                    if (ch === '0') {
+                        b[o] = '<span style="color:blue;">' + ch + '</span>';
+                    } else if (ch === '!') {
+                        b[o] = '<span style="color:yellow;">' + ch + '</span>';
+                    } else if (ch === '=') {
+                        b[o] = '<span style="color:yellow;">' + ch + '</span>';
+                    } else {
+                        b[o] = ch; 
+                    }
                 }
 
             }
 
         }
 
+        var html = '';
+        for (var i = 0; i < height; i++) {
+            html += b.slice(i * width, (i + 1) * width).join('') + '\n';
+        }
+
         // Update html element with the ascii frame
-        preTag.innerHTML = b.join('');
+        // preTag.innerHTML = b.join('');
+        preTag.innerHTML = html;
 
     }
 
