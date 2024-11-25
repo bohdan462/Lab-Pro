@@ -99,7 +99,6 @@ section:nth-of-type(4) ~ .floating-shapes .floating-shape {
     }
 }
 
-/* Add subtle background effect */
 .floating-shape::before {
     content: '';
     position: absolute;

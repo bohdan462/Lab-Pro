@@ -1,39 +1,19 @@
-/*
- *
- * CSS written based on SMACSS architecture.
- * To learn more, visit: http://smacss.com/
- * 
- * For simplicity, no reset or normalize is added. 
- * To learn more, visit: https://css-tricks.com/reboot-resets-reasoning/
- *
-*/
-
 
 :root {
-    /* Primary Colors */
     --color-primary: #00ffb3;    
     --color-secondary: #6c63ff;   
-    
-    /* Background Colors */
     --color-background: #0a0b1e;   
     --color-surface: #151633;     
-    
-    /* Text Colors */
     --color-text: #e2e4ff;         
     --color-text-secondary: #8a8dba;
     --color-code: #00ffb3;         
-    
-    /* Accent Colors */
     --color-accent-1: #ff3366;    
     --color-accent-2: #3dfff4;     
-    
-    /* Gradients */
     --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     --gradient-dark: linear-gradient(135deg, var(--color-background), var(--color-surface));
     --transition-default: all 0.5s ease;
 }
 
-/* ---- Base Rules ---- */
 html {
     scroll-behavior: smooth;
 }
@@ -261,11 +241,11 @@ main {
         box-shadow: 0 0 20px var(--color-accent-2);
     }
     66.66% { 
-        background: #ff00ff; /* Additional acid color */
+        background: #ff00ff; 
         box-shadow: 0 0 20px #ff00ff;
     }
     83.33% { 
-        background: #ffff00; /* Additional acid color */
+        background: #ffff00; 
         box-shadow: 0 0 20px #ffff00;
     }
     100% { 
@@ -537,7 +517,6 @@ main {
 @media only screen and (min-width: 35em){
     .landing__container {
         max-width: 50em;
-        /* padding: 4em; */
     }
 
     
@@ -615,7 +594,6 @@ main {
     margin-bottom: 0.8em;
   }
 
-    /* Game controls */
   #game-controls {
     padding: 1em;
   }
@@ -633,7 +611,6 @@ main {
 
   }
 
-/* Background Circles */
 section:nth-of-type(odd) .landing__container::before {
     content: '';
     background: rgba(0, 255, 179, 0.03);

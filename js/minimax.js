@@ -1,14 +1,15 @@
-
-  
-// Tic Tac Toe AI with Minimax Algorithm
+/**
+ * @description Finds the best move for the AI using the minimax algorithm
+ * @returns {void}
+ */
 function bestMove() {
-    // AI to make its turn
+ 
     let bestScore = -Infinity;
     let move;
     
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        // Is the spot available?
+     
         if (board[i][j] == '') {
           board[i][j] = ai;
           let score = minimax(board, 0, false);
@@ -37,6 +38,13 @@ function bestMove() {
     tie: 0
   };
   
+/**
+ * @description Implements the minimax algorithm to find the best move for the AI
+ * @param {Array} board - The current game board
+ * @param {number} depth - The depth of the current move
+ * @param {boolean} isMaximizing - Whether the AI is maximizing or minimizing
+ * @returns {number} The best score for the AI
+ */
   function minimax(board, depth, isMaximizing) {
     let result = checkWinner();
     if (result !== null) {
@@ -47,7 +55,7 @@ function bestMove() {
       let bestScore = -Infinity;
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-          // Is the spot available?
+        
           if (board[i][j] == '') {
             board[i][j] = ai;
             let score = minimax(board, depth + 1, false);
@@ -61,7 +69,7 @@ function bestMove() {
       let bestScore = Infinity;
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-          // Is the spot available?
+         
           if (board[i][j] == '') {
             board[i][j] = human;
             let score = minimax(board, depth + 1, true);

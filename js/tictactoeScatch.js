@@ -1,3 +1,4 @@
+
 const startGameButton = document.getElementById('start-game');
 
 const aiMessages = {
@@ -44,6 +45,10 @@ const aiMessages = {
     ]
 };
 
+/**
+ * @description Game state variables
+ */
+
 const board = [
     ['', '', ''],
     ['', '', ''],
@@ -57,6 +62,10 @@ let human = 'Player';
 let currentPlayer = human;
 let isHumanFirst = true;
 
+/**
+ * @description Creates and initializes the game board
+ * @returns {void}
+ */
 function createBoard() {
     const container = document.getElementById('tictactoe-container');
     container.innerHTML = '';
@@ -85,6 +94,11 @@ function createBoard() {
     container.appendChild(gridContainer); 
 }
 
+/**
+ * @description Displays the AI message based on the message type
+ * @param {string} messageType - The type of message to display
+ * @returns {void}
+ */
 function displayAIMessage(messageType) {
     const messageDisplay = document.getElementById('ai-message');
     if (!messageDisplay) return;
@@ -110,6 +124,11 @@ function displayAIMessage(messageType) {
     messageDisplay.textContent = messages[Math.floor(Math.random() * messages.length)];
 }
 
+/**
+ * @description Handles player's move when a cell is clicked
+ * @param {Event} event - Click event object
+ * @returns {void}
+ */
 function handleCellClick(event) {
     if (currentPlayer === human) {
         const row = parseInt(event.target.dataset.row);
@@ -135,6 +154,10 @@ function makeMove(row, col, player) {
 
 }
 
+/**
+ * @description Updates the game display after each move
+ * @returns {void}
+ */
 function updateDisplay() {
     const cells = document.querySelectorAll('.grid-cell');
     cells.forEach((cell) => {
@@ -150,7 +173,7 @@ function updateDisplay() {
             cell.textContent = '';
         }
         
-        // Set the class names
+      
         let classes = ['grid-cell'];
         if (value) {
             classes.push('filled');
@@ -164,6 +187,10 @@ function updateDisplay() {
     });
 }
 
+/**
+ * @description Checks the winner of the game
+ * @returns {string|null} The winner or 'tie' if no winner, or null if the game is still in progress
+ */
 function checkWinner() {
     
     for (let i = 0; i < 3; i++) {
@@ -198,6 +225,11 @@ function checkWinner() {
 
 }
 
+/**
+ * @description Handles the end of the game and updates the score
+ * @param {string} result - The result of the game
+ * @returns {void}
+ */
 function handleGameEnd(result) {
     setTimeout(() => {
         if (result === 'tie') {
@@ -210,9 +242,9 @@ function handleGameEnd(result) {
         
         setTimeout(() => {
             if (result === 'tie') {
-                // alert(`Game Over! TIE!`);
+         
             } else {
-                // alert(`Winner: ${result}`);
+               
                 if (result === human) {
                     humanScore++;
                     document.getElementById('human-score').textContent = humanScore;
@@ -233,6 +265,10 @@ function handleGameEnd(result) {
     }, 500);
 }
 
+/**
+ * @description Resets the game state to its initial state
+ * @returns {void}
+ */
 function resetGame() {
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
@@ -245,8 +281,6 @@ function resetGame() {
     currentPlayer = isHumanFirst ? human : ai;
 
 }
-
-// Initialize game
 document.addEventListener('DOMContentLoaded', () => {
     createBoard();
     startGameButton.addEventListener('click', resetGame);
@@ -258,3 +292,4 @@ document.addEventListener('DOMContentLoaded', () => {
         resetGame();
     });
 });
+
